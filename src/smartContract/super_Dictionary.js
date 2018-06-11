@@ -156,6 +156,9 @@ SuperDictionary.prototype = {
     newAddress.setAuthor(from)
     this.address.set(keyword, newAddress)
 
+    // 按分类存储备份
+    this.saveBycategory(value)
+
     // 先查找key对应的值是否已经存在
     var resource = this.repo.get(key)
 
@@ -170,15 +173,11 @@ SuperDictionary.prototype = {
       var obj =JSON.parse(value)
       resource['imgurl'] = obj.imgurl
       this.repo.set(key, resource)
-
     } else {
       // 储存新资源对象到仓库
       var newresource = new ResourceItem(value)
       newresource.addAuthor(from)
       this.repo.set(key, newresource)
-
-      // 按分类存储备份
-      this.saveBycategory(value)
     }
   },
   saveBycategory: function (value) {
@@ -194,7 +193,6 @@ SuperDictionary.prototype = {
       case 'chtv': this.n_chtv += 1; this.chtv.set(this.n_chtv, newItem); break
       case 'eatv': this.n_eatv += 1; this.eatv.set(this.n_eatv, newItem); break
       case 'jktv': this.n_jktv += 1; this.jktv.set(this.n_jktv, newItem); break
-      default: break
     }
   },
   // 查询

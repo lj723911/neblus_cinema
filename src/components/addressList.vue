@@ -1,15 +1,16 @@
 <template>
   <div>
-    <template v-for="(item, index) in address" class= "addr-board" v-if="showAddress">
+    <template v-for="(item, index) in address" class= "addr-board">
       <div class="address">
         <div class="description">描述：{{item.description}}</div>
-        <span>地址：</span>
-        <p>{{item.address}}</p>
         <span>作者：</span>
         <p>{{item.author}}</p>
+        <span>地址：</span>
+        <p v-if="showAddress">{{item.address}}</p>
+        <button v-if="!showAddress" class="show-me-addr" @click="showAddr(item)">0.01Nas购买地址</button>
       </div>
     </template>
-    <button class="show-me-addr" @click="showAddrBoard">我要看资源</button>
+    <button class="show-me-addr" v-if="isShowAddrBoard" @click="showAddrBoard()">点击查看地址</button>
   </div>
 </template>
 
@@ -44,17 +45,45 @@ export default {
   },
   data () {
     return {
+      address:[],
       showAddress: false,
-      address:[]
+      isShowAddrBoard: true
     }
   },
   methods: {
-    showAddrBoard: function(){
-      this.showAddress = true
+    cbCheck: function(resp){
+      console.log("response of push: " + JSON.stringify(resp))
+      var intervalQuery = setInterval(() => {
+        api.getTransactionReceipt({hash: resp["txhash"]}).then((receipt) => {
+            console.log("判断数据提交到区块链的状态")
+            // console.log(receipt)
+            if (receipt["status"] === 2) {
+                console.log("pending.....")
+            } else if (receipt["status"] === 1){
+                console.log("交易成功......")
+                this.showAddress = true
+                //清除定时器
+                clearInterval(intervalQuery)
+            }else {
+                console.log("交易失败......")
+                //清除定时器
+                clearInterval(intervalQuery)
+            }
+        });
+      }, 5000);
+    },
+    showAddr: function(item){
+      var to = item.author
+      var value = "0.001"
+      nebPay.pay(to, value, {
+        listener: this.cbCheck
+      })
+    },
+    showAddrBoard:function(){
       for (var i in this.addrAuth) {
-      console.log(this.addrAuth[i]+this.keyword)
-         this.getAddr(this.addrAuth[i]+this.keyword)
+        this.getAddr(this.addrAuth[i]+this.keyword)
       }
+      this.isShowAddrBoard = false
     },
     getAddr: function(key){
        console.log("搜索")
@@ -73,11 +102,9 @@ export default {
        }
        neb.api.call(from,dappAddress,value,nonce,gas_price,gas_limit,contract).then( (resp) => {
             console.log("数据查询完成\n")
-            console.log(resp)
-            console.log(resp["result"])
             if (resp["result"] !== "null") {
                 console.log("========================")
-                var data = resp["result"];
+                var data = resp["result"]
                 var slideArr = this.address
                 slideArr.push(JSON.parse(data))
                 this.address = slideArr

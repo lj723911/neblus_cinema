@@ -13,7 +13,7 @@
         <h2>{{item.story}}</h2>
       </div>
       <div class="sales-board">
-        <addressList :addrAuth = "addrAuthors" :keyword = "thisTitle"></addressList>
+          <addressList :addrAuth = "addrAuthors" :keyword = "thisTitle"></addressList>
       </div>
     </div>
   </div>
