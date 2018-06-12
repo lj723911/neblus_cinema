@@ -30,7 +30,7 @@ var neb = new Neb(new Nebulas.HttpRequest("https://testnet.nebulas.io"));
 var Account = Nebulas.Account;
 var api = neb.api;
 
-const dappAddress = "n1kUiUVMW3EJsv5aP6S1xwMeCdS52WfoAL8"
+const dappAddress = "n1yfDX6QDVA1Hv4PYboCjbv39NZakviZdH3"
 
 export default {
   props: {

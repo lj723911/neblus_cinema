@@ -31,7 +31,8 @@
           <p>本站是一个基于星云链构建的影视资源共享平台，您可以在这里上传您拥有的各种视频资源链接。</p>
           <span class="tip"><img src="../assets/tip.png"></span><h1>如何使用</h1>
           <p>只需要通过你的 Nas 钱包上传视频信息和地址，并将钱包地址分享给他人，即可达到分享的目的。</p>
-          <p>如果您上传的资源名称已经存在，您上传的地址会合并到同一个资源下面，并以列表的形式展示出来。</p>
+          <p>如果您上传的资源名称已经存在，那么通过搜索得到的资源中会包含您提供的地址，以列表的形式展示出来。</p>
+          <p>想要获取地址详情，只需要0.01Nas即可获得地址</p>
           <span class="tip"><img src="../assets/tip.png"></span><h1>如何获取 Nas 钱包</h1>
           <p>点击<a target="_blank" href="http://github.com/ChengOrangeJu/WebExtensionWallet">WebExtensionWallet</a>链接， 根据使用说明，在chrome浏览器中安装 NAS 钱包插件，并生成你的个人钱包。</p>
         </div>
@@ -104,7 +105,7 @@ var neb = new Neb(new Nebulas.HttpRequest("https://testnet.nebulas.io"));
 var Account = Nebulas.Account;
 var api = neb.api;
 
-const dappAddress = "n1kUiUVMW3EJsv5aP6S1xwMeCdS52WfoAL8"
+const dappAddress = "n1yfDX6QDVA1Hv4PYboCjbv39NZakviZdH3"
 
 export default {
   components: {
